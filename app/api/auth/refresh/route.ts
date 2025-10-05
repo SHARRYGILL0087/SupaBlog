@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { NextApiResponse } from "next";
 import jwt from "jsonwebtoken"
 
-export async function GET(req:NextRequest , res : NextApiResponse) {
+export async function GET(req:NextRequest) {
     const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "yourrefreshtokensecret"
     const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "ACCESS_TOKEN_SECRET"
     const cookies = req.cookies || ""
