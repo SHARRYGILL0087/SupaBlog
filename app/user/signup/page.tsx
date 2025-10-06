@@ -68,7 +68,7 @@ export default function SignUp() {
 
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
-      const isValid = await axios.post(`${baseUrl}/api/user/varify-email`, { email: formData.email })
+      const isValid = await axios.post(`/api/user/varify-email`, { email: formData.email })
 
       console.log('isValid -> ', isValid.data)
 
