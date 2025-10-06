@@ -2,11 +2,10 @@ import { supabase } from "@/lib/supabase-client";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { NextApiResponse } from "next";
 import cookie from "cookie"
 
 
-export async function POST(req: Request, res: NextApiResponse) {
+export async function POST(req: Request) {
     try {
         const { name, email, password } = await req.json()
         console.log({ name, email, password })
