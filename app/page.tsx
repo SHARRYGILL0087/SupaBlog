@@ -2,34 +2,31 @@
 import Image from "next/image";
 import LatestBlogs from "./components/LatestBlogs";
 import Typed from "typed.js";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
 import axios from "axios";
 import { login } from "@/redux/slices/isloginSlice";
 
-
-
 export default function Home() {
   const el = useRef<HTMLSpanElement>(null);
-  const isLogin = useSelector((state: RootState) => state.isLoginSlice.isLogin)
-    const dispatch = useDispatch<AppDispatch>();
+  const isLogin = useSelector((state: RootState) => state.isLoginSlice.isLogin);
+  const dispatch = useDispatch<AppDispatch>();
 
-  console.log("IsLogin -> ", isLogin)
+  console.log("IsLogin -> ", isLogin);
 
   const getUser = async () => {
     try {
-      const res = await axios.get("api/auth/refresh")
-      console.log(res.data)
-      if(res.data){
-        dispatch(login())
+      const res = await axios.get("api/auth/refresh");
+      console.log(res.data);
+      if (res.data) {
+        dispatch(login());
       }
     } catch (error) {
-      console.log("Error while getting user ->",error)
+      console.log("Error while getting user ->", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (el.current) {
@@ -48,54 +45,67 @@ export default function Home() {
     }
   }, []);
 
-
   return (
-    <main>
-      <section className="w-full h-[80vh] ">
-        <div className="flex items-center justify-center w-full h-full px-12">
-          <div className="w-1/2 ">
-            <div className="flex flex-col w-2xl">
-              <h1 className="text-4xl font-bold mb-2">
-                Share your ideas, tell your story, and inspire the world
-              </h1>
-              <p className="text-3xl text-gray-700 font-medium">
-                Discover voices, explore perspectives, and create your own{" "}
-                <span ref={el} className="text-blue-600 font-semibold"></span>.
-              </p>
-            </div>
-          </div>
-          <div className="w-1/2">
-            <Image
-              height={500}
-              width={500}
-              alt="Blog"
-              src={'/blog.jpg'}
-              className="w-[550px]"
-            ></Image>
-          </div>
+    <main className="overflow-x-hidden">
+      {/* HERO SECTION */}
+      <section className="w-full min-h-[70vh] flex flex-col-reverse lg:flex-row items-center justify-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 py-10">
+        {/* Left content */}
+        <div className="w-full lg:w-1/2 text-center lg:text-left mt-6 lg:mt-0">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 leading-snug">
+            Share your ideas, tell your story, and inspire the world
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">
+            Discover voices, explore perspectives, and create your own{" "}
+            <span ref={el} className="text-blue-600 font-semibold"></span>.
+          </p>
+        </div>
+
+        {/* Right image */}
+        <div className="w-full lg:w-1/2 flex justify-center">
+          <Image
+            height={500}
+            width={500}
+            alt="Blog"
+            src="/blog.jpg"
+            className="w-[250px] sm:w-[350px] md:w-[450px] lg:w-[500px] xl:w-[550px] rounded-xl object-contain"
+          />
         </div>
       </section>
-      <section>
-        <div className="container mx-auto w-[90vw] my-5">
-          <h1 className="text-6xl font-semibold font-serif">Blog with the best</h1>
-          <p className="text-xl font-semibold w-[70%] mt-2">More bloggers and independent creators choose WordPress than any other blogging tool. Tap into intuitive, flexible tools that put writers, bloggers, and creators first.</p>
-          <Link href={'/blog/create'}>
-            <button className="font-semibold text-2xl px-4 py-2 cursor-pointer bg-gray-800 hover:bg-slate-900 text-white font-serif mt-4 rounded-2xl">Start a blog</button>
+
+      {/* MID SECTION */}
+      <section className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 my-10 text-center lg:text-left">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold font-serif">
+            Blog with the best
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl font-semibold text-gray-700 mt-3 mx-auto lg:mx-0 w-full md:w-[80%] lg:w-[70%]">
+            More bloggers and independent creators choose WordPress than any
+            other blogging tool. Tap into intuitive, flexible tools that put
+            writers, bloggers, and creators first.
+          </p>
+          <Link href="/blog/create">
+            <button className="font-semibold text-lg sm:text-xl md:text-2xl px-4 py-2 mt-5 rounded-2xl bg-gray-800 hover:bg-slate-900 text-white transition-all duration-300">
+              Start a blog
+            </button>
           </Link>
         </div>
-        <div className="container mx-auto w-[90vw] my-5 border p-4 bg-slate-100 rounded-2xl ">
+      </section>
+
+      {/* IMAGE SECTION */}
+      <section className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 my-10">
+        <div className="w-full bg-slate-100 border p-3 sm:p-4 rounded-2xl shadow-sm">
           <Image
             height={900}
             width={1000}
-            src={'/blog1.jpg'}
+            src="/blog1.jpg"
             alt="Blog1"
-            className="w-full"
-          ></Image>
+            className="w-full h-auto rounded-xl object-cover"
+          />
         </div>
-
       </section>
 
-      <section >
+      {/* LATEST BLOGS */}
+      <section className="px-4 sm:px-8 md:px-12 lg:px-16 xl:px-24 my-10">
         <LatestBlogs />
       </section>
     </main>
